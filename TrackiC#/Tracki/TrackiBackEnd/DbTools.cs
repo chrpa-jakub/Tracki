@@ -74,10 +74,10 @@ namespace Tracki
             
 
             
-            var dbQueryPath = @"C:\Users\diahex\Projects\Tracki\TrackiC#\Tracki\TrackiBackEnd\bin\Release\netcoreapp3.1\dbQuery.sql";
+            var dbQueryPath = "dbQuery.sql";
             var dbQuery = File.ReadAllText(dbQueryPath);
             var sqlCmd = new NpgsqlCommand(dbQuery, sqlConn);
-            //sqlCmd.ExecuteNonQuery();
+            //sqlCmd.ExecuteNonQuery(); 
             var cfgContents = "";
             using (var reader = new StreamReader(configPath))
             {
