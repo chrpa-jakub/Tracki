@@ -13,6 +13,7 @@ namespace Tracki
         {
             var tempPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
             var line = "";
+            var dbCreated = false;
             using (var reader = new StreamReader(tempPath))
             {
                 for (int i = 0; i < 2; i++)
@@ -27,16 +28,21 @@ namespace Tracki
                 var dbExists = Convert.ToString((matches[0].Groups[1].Value));
                 if (dbExists == "false")
                 {
-                    DbCreate();
+                    dbCreated = true;
                 }
+            }
+
+            if (dbCreated == true)
+            {
+                DbCreate();
             }
         }
 
         public void DbCreate()
         {
-            var tempPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
+            var configPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
             var file = "";
-            using (var reader = new StreamReader(tempPath))
+            using (var reader = new StreamReader(configPath))
             {
                 while (!reader.EndOfStream)
                 {
@@ -67,10 +73,28 @@ namespace Tracki
             sqlConn.Open();
             
 
-            //Nejde přečíst.
-            /*var dbQueryPath = @"C:\Users\diahex\Projects\Tracki\TrackiC#\Tracki\TrackiBackEnd\bin\Release\netcoreapp3.1\dbQuery.txt";
+            
+            var dbQueryPath = @"C:\Users\diahex\Projects\Tracki\TrackiC#\Tracki\TrackiBackEnd\bin\Release\netcoreapp3.1\dbQuery.sql";
             var dbQuery = File.ReadAllText(dbQueryPath);
-            Console.WriteLine(dbQuery);*/
+            var sqlCmd = new NpgsqlCommand(dbQuery, sqlConn);
+            //sqlCmd.ExecuteNonQuery();
+            var cfgContents = "";
+            using (var reader = new StreamReader(configPath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    
+                    var line = reader.ReadLine();
+                    //Console.WriteLine(line);
+                    if (line == "db_created = 'false'")
+                    {
+                        line = "db_created = 'true'";
+                    }
+                    cfgContents += line + Environment.NewLine;
+                }
+            }
+
+            File.WriteAllText(@"C:\Users\diahex\Projects\Tracki\config.cfg", cfgContents);
 
         }
 
