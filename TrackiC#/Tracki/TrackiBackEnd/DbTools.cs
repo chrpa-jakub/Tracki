@@ -13,7 +13,7 @@ namespace Tracki
         {
             var tempPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
             var line = "";
-            var dbCreated = false;
+            var dbCreated = true;
             using (var reader = new StreamReader(tempPath))
             {
                 for (int i = 0; i < 2; i++)
@@ -28,11 +28,11 @@ namespace Tracki
                 var dbExists = Convert.ToString((matches[0].Groups[1].Value));
                 if (dbExists == "false")
                 {
-                    dbCreated = true;
+                    dbCreated = false;
                 }
             }
 
-            if (dbCreated == true)
+            if (dbCreated == false)
             {
                 DbCreate();
             }
