@@ -11,10 +11,10 @@ namespace Tracki
     {
         public void CheckDbExistence()
         {
-            var tempPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
+            var configPath = "config.cfg";
             var line = "";
             var dbCreated = true;
-            using (var reader = new StreamReader(tempPath))
+            using (var reader = new StreamReader(configPath))
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -40,7 +40,7 @@ namespace Tracki
 
         public void DbCreate()
         {
-            var configPath = @"C:\Users\diahex\Projects\Tracki\config.cfg";
+            var configPath = "config.cfg";
             var file = "";
             using (var reader = new StreamReader(configPath))
             {
