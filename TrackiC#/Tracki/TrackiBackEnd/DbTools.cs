@@ -94,7 +94,7 @@ namespace Tracki
                 }
             }
 
-            File.WriteAllText(@"C:\Users\diahex\Projects\Tracki\config.cfg", cfgContents);
+            File.WriteAllText(configPath, cfgContents);
 
         }
 
