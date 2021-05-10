@@ -1,1 +1,1 @@
-Školní projekt s názvem SongsAndVotes
+Školní projekt s názvem Tracki (alt. SongsAndVotes).
