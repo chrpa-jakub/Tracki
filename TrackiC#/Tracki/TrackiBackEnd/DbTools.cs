@@ -77,7 +77,12 @@ namespace Tracki
             var dbQueryPath = "dbQuery.sql";
             var dbQuery = File.ReadAllText(dbQueryPath);
             var sqlCmd = new NpgsqlCommand(dbQuery, sqlConn);
-            //sqlCmd.ExecuteNonQuery(); 
+            /*
+             * DB setup query, only execute once.
+             *
+             *
+             * sqlCmd.ExecuteNonQuery();
+             */
             var cfgContents = "";
             using (var reader = new StreamReader(configPath))
             {
