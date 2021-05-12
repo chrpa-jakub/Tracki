@@ -54,9 +54,7 @@ namespace Tracki
 
         public string PullFromConfig(string lookingFor)
         {
-            var regex = $"{lookingFor} = '(.+)'";
-            var match = Regex.Match(DatabaseInfo.ConfigText, regex);
-            return match.Groups[1].Value;
+            return Regex.Match(DatabaseInfo.ConfigText, $"{lookingFor} = '(.+)'").Groups[1].Value;
         }
 
     }
