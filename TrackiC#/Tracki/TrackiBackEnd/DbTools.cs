@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Npgsql;
+using TrackiBackEnd;
 
 namespace Tracki
 {
@@ -11,28 +12,7 @@ namespace Tracki
     {
         public void CheckDbExistence()
         {
-            var configPath = "config.cfg";
-            var line = "";
-            var dbCreated = true;
-            using (var reader = new StreamReader(configPath))
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    line = reader.ReadLine();
-                }
-
-                var pattern = @"db_created = '(.+)'";
-                var regex = new Regex(pattern);
-                var matches = regex.Matches(line);
-
-                var dbExists = Convert.ToString((matches[0].Groups[1].Value));
-                if (dbExists == "false")
-                {
-                    dbCreated = false;
-                }
-            }
-
-            if (dbCreated == false)
+            if (DatabaseInfo.Exists == "false")
             {
                 DbCreate();
             }
@@ -40,51 +20,20 @@ namespace Tracki
 
         public void DbCreate()
         {
-            var configPath = "config.cfg";
-            var file = "";
-            using (var reader = new StreamReader(configPath))
-            {
-                while (!reader.EndOfStream)
-                {
-                    file += reader.ReadLine() + Environment.NewLine;
-                }
-            }
-
-            var regexList = new List<string>();
-
-            regexList.Add(@"db_host = '(.+)'");
-            regexList.Add(@"db_port = '(.+)'");
-            regexList.Add(@"db_serverName = '(.+)'");
-            regexList.Add(@"db_serverUsername = '(.+)'");
-            regexList.Add(@"db_serverPassword = '(.+)'");
-            regexList.Add(@"db_databaseName = '(.+)'");
-
-            var MatchList = regexMatcher(regexList, file);
-            var dbHost = MatchList[0];
-            var dbPort = MatchList[1];
-            var dbServerName = MatchList[2];
-            var dbServerUsername = MatchList[3];
-            var dbServerPassword = MatchList[4];
-            var dbDatabaseName = MatchList[5];
-            
-            var connString = $"Host={dbHost};Username={dbServerUsername};Password={dbServerPassword};Database={dbDatabaseName}";
-            var sqlConn = new NpgsqlConnection(connString);
-
+            var sqlConn = new NpgsqlConnection(DatabaseInfo.ConnString);
             sqlConn.Open();
-            
 
-            
+
             var dbQueryPath = "dbQuery.sql";
             var dbQuery = File.ReadAllText(dbQueryPath);
-            var sqlCmd = new NpgsqlCommand(dbQuery, sqlConn);
+            var sqlCmd = new NpgsqlCommand(dbQuery, sqlConn); 
             /*
              * DB setup query, only execute once.
-             *
              *
              * sqlCmd.ExecuteNonQuery();
              */
             var cfgContents = "";
-            using (var reader = new StreamReader(configPath))
+           using (var reader = new StreamReader("config.cfg"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -99,20 +48,16 @@ namespace Tracki
                 }
             }
 
-            File.WriteAllText(configPath, cfgContents);
+            File.WriteAllText("config.cfg", cfgContents);
 
         }
 
-        public List<string> regexMatcher(List<string> regexList, string text)
+        public string PullFromConfig(string lookingFor)
         {
-            var MatchList = new List<string>();
-            foreach (var pattern in regexList)
-            {
-                var m = Regex.Match(text, pattern);
-                MatchList.Add(m.Groups[1].Value);
-
-            }
-            return MatchList;
+            var pathToConfig = "config.cfg";
+            var regex = $"{lookingFor} = '(.+)'";
+            var match = Regex.Match(DatabaseInfo.ConfigText, regex);
+            return match.Groups[1].Value;
         }
 
     }
