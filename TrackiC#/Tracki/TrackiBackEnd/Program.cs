@@ -7,7 +7,7 @@ namespace TrackiBackEnd
     {
         static void Main(string[] args)
         {
-            var databaseInfo = new DatabaseInfo();
+            var runConstructor = new DatabaseInfo();
             var tools = new DbTools();
             tools.CheckDbExistence();
         }
