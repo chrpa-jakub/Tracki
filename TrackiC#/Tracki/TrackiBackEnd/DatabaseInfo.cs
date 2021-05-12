@@ -21,6 +21,7 @@ namespace TrackiBackEnd
 
         public DatabaseInfo()
         {
+            ConfigText = File.ReadAllText("config.cfg");
             var tools = new DbTools();
             Exists = tools.PullFromConfig("db_created");
             Host = tools.PullFromConfig("db_host");
@@ -30,7 +31,6 @@ namespace TrackiBackEnd
             ServerPassword = tools.PullFromConfig("db_serverPassword");
             DatabaseName = tools.PullFromConfig("db_databaseName");
             ConnString = $"Host={Host};Username={ServerUsername};Password={ServerPassword};Database={DatabaseName}";
-            ConfigText = File.ReadAllText("config.cfg");
         }
     }
 }
