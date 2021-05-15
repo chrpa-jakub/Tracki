@@ -1,0 +1,30 @@
+<div class="login-container">
+    <div class="login-header-text">
+        <span class="loginto-text">Log In to </span><span class="tracki-text">Tracki</span>
+    </div>
+    <form class="login-form">
+        <div class="form-group">
+            <label for="emailOrUsername" class="email-label">
+                Email address or username <br>
+            </label>
+            <input id="emailOrUsername" type="text" class="form-control login-input">
+        </div>
+        <div class="form-group">
+            <label for="password" class="password-label">
+                Password <br>
+            </label>
+            <input id="password" type="text"  class="form-control login-input">
+        </div>
+        <div style="margin-top: 10px;"><a>Forgot your password?</a></div>
+        <div style="display:flex; justify-content: space-between;">
+            <label class="rememberme-checkbox"><div style="margin-top: 4px;">Remember me</div>
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <button class="btn btn-primary login-button">LOG IN</button>            
+        </div>
+    </form>
+    <hr>
+    <p style="font-size: 1rem; margin-top: 15px; text-align: center;">Don't have an account?</p>
+    <a routerLink="/signup"><button class="btn signup-button">SIGN UP FOR TRACKI</button></a>
+</div>
