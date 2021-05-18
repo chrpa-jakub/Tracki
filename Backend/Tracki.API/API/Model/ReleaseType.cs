@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.ComponentModel.DataAnnotations;
 
 namespace TrackiBackEnd.Model
 {
     public partial class ReleaseType
     {
-        public ReleaseType()
-        {
-            Releases = new HashSet<Release>();
-        }
-
+        [Key]
         public int ReleaseTypeId { get; set; }
         public string ReleaseTypeName { get; set; }
-
-        public virtual ICollection<Release> Releases { get; set; }
     }
 }
