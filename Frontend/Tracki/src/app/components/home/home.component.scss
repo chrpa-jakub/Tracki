@@ -1,0 +1,102 @@
+$base-color-1: #30B052;
+$base-color-2: #56E57D;
+$background-color: #F2F2F2;
+
+.header-container {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    line-height: 60px;
+    text-align: center;
+}
+
+.body-contaner {
+    height: 100%;
+    width: 100%;
+}
+
+.header-text-container {
+    display: flex;
+}
+
+.logo-text {
+    font-size: 2.2rem;
+    color: $base-color-1;
+    font-weight: bold;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.links-container {
+    margin-left: 100px;
+}
+
+.links-container>a {
+    font-size: 1.3rem;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.premium-text {
+    color: $base-color-1;
+    font-weight: bold;
+}
+
+.header-btn-container {
+    margin-right: 10px;
+}
+
+.header-btn-container>* {
+    margin-left: 10px;
+}
+
+.login-button {
+    background-color: white;
+    border: 2px solid $base-color-1;
+    color: $base-color-1;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: $base-color-1;
+    color:white;
+}
+
+.signup-button {
+    background-color: $base-color-1;
+    border: 2px solid $base-color-1;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.signup-button:hover {
+    background-color: $base-color-2;
+    border-color: $base-color-2;
+}
+
+.welcome-text {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
