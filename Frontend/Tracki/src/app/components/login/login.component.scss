@@ -78,6 +78,10 @@ $background-color: #F2F2F2;
     font-weight: bold;
 }
 
+inpurt.ng-invalid {
+    border-left: 5px solid red;
+}
+
 @media (max-width: 370px) {
     .tracki-text{
         font-size: 3rem;
@@ -162,4 +166,3 @@ $background-color: #F2F2F2;
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-

@@ -2,23 +2,29 @@
     <div class="login-header-text">
         <span class="loginto-text">Log In to </span><span class="tracki-text">Tracki</span>
     </div>
-    <form class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
         <div class="form-group">
             <label for="emailOrUsername" class="email-label">
-                Email address or username <br>
+                Email address or username<br>
             </label>
-            <input id="emailOrUsername" type="text" class="form-control login-input">
+            <input id="emailOrUsername" type="text" formControlName="emailOrUsername" class="form-control login-input">
+            <div *ngIf="emailOrUsername.errors?.required && submitted" class="alert">
+                Email or username is required.
+            </div>
         </div>
         <div class="form-group">
             <label for="password" class="password-label">
-                Password <br>
+                Password<br>
             </label>
-            <input id="password" type="text"  class="form-control login-input">
+            <input id="password" type="password" formControlName="password" class="form-control login-input" >
+            <div *ngIf="password.errors?.required && submitted" class="alert">
+                Password is required.
+            </div>
         </div>
         <div style="margin-top: 10px;"><a>Forgot your password?</a></div>
         <div style="display:flex; justify-content: space-between;">
             <label class="rememberme-checkbox"><div style="margin-top: 4px;">Remember me</div>
-                <input type="checkbox">
+                <input type="checkbox" formControlName="rememberMe">
                 <span class="checkmark"></span>
             </label>
             <button class="btn btn-primary login-button">LOG IN</button>            
