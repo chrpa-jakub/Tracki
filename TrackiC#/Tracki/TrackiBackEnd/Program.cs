@@ -10,6 +10,8 @@ namespace TrackiBackEnd
             new DatabaseInfo(); // Init object constructor.
             var tools = new DbTools();
             tools.CheckDbExistence();
+            Console.WriteLine(DatabaseInfo.ConnString);
+            Console.ReadKey();
         }
     }
 }
