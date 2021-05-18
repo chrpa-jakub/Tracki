@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router'
-
+import { ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,12 +21,13 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
   providers: [],

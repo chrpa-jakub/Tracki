@@ -2,24 +2,33 @@
     <div class="signup-header-text">
         <span class="signupto-text">Sign Un to </span><span class="tracki-text">Tracki</span>
     </div>
-    <form class="signup-form">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
         <div class="form-group">
             <label for="email" class="input-label">
                 Email address<br>
             </label>
-            <input id="email" type="text" class="form-control signup-input">
+            <input id="email" type="text" formControlName="email" class="form-control signup-input">
+            <div *ngIf="email.errors?.required && submitted" class="alert">
+                Email is required.
+            </div>
         </div>
         <div class="form-group">
             <label for="username" class="input-label">
                 Username<br>
             </label>
-            <input id="username" type="text" class="form-control signup-input">
+            <input id="username" type="text" formControlName="username" class="form-control signup-input">
+            <div *ngIf="username.errors?.required && submitted" class="alert">
+                Username is required.
+            </div>
         </div>
         <div class="form-group">
             <label for="password" class="input-label">
                 Password <br>
             </label>
-            <input id="password" type="text"  class="form-control signup-input">
+            <input id="password" type="password" formControlName="password" class="form-control signup-input">
+            <div *ngIf="password.errors?.required && submitted" class="alert">
+                Password is required.
+            </div>
         </div> 
         <button class="btn btn-primary signup-button">SIGN UP</button>            
     </form>
