@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TrackiBackEnd.Model;
@@ -33,6 +32,23 @@ namespace API.Migrations
                     b.HasKey("TypeId");
 
                     b.ToTable("AccountTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            TypeId = 1,
+                            TypeName = "user"
+                        },
+                        new
+                        {
+                            TypeId = 2,
+                            TypeName = "premiumUser"
+                        },
+                        new
+                        {
+                            TypeId = 3,
+                            TypeName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("TrackiBackEnd.Model.Artist", b =>
