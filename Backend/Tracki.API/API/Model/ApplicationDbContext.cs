@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -6,11 +8,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TrackiBackEnd.Model
 {
-	public partial class ApplicationDbContext : DbContext
+	public partial class ApplicationDbContext : IdentityDbContext
 	{
-		public ApplicationDbContext()
-		{
-		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
@@ -19,21 +18,23 @@ namespace TrackiBackEnd.Model
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<AccountType>().HasData(new AccountType[]
-			{
-				new AccountType{ TypeId=1, TypeName="user" },
-				new AccountType{ TypeId=2, TypeName="premiumUser" },
-				new AccountType{ TypeId=3, TypeName="admin" },
-			});
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<IdentityUser>().ToTable("Users");
+			modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
+			modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+			modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+			modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+			modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+			modelBuilder.Entity<IdentityRole>().ToTable("Roles");
 		}
 
-		public virtual DbSet<AccountType> AccountTypes { get; set; }
-		public virtual DbSet<Artist> Artists { get; set; }
-		public virtual DbSet<Photo> Photos { get; set; }
-		public virtual DbSet<Release> Releases { get; set; }
-		public virtual DbSet<ReleaseType> ReleaseTypes { get; set; }
-		public virtual DbSet<Song> Songs { get; set; }
-		public virtual DbSet<User> Users { get; set; }
+		public DbSet<Artist> Artists { get; set; }
+		public DbSet<Photo> Photos { get; set; }
+		public DbSet<Release> Releases { get; set; }
+		public DbSet<ReleaseType> ReleaseTypes { get; set; }
+		public DbSet<Song> Songs { get; set; }
+		//public virtual DbSet<User> Users { get; set; }
 
 	}
 }

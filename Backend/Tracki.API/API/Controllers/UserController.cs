@@ -21,19 +21,5 @@ namespace API.Controllers
 			this.context = context;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<List<User>>> Get()
-		{
-			return await context.Users.ToListAsync();
-		}
-
-		[HttpPost]
-		public async Task<ActionResult<int>> Post(User user)
-		{
-			context.Add(user);
-			await context.SaveChangesAsync();
-			return user.UserId;
-		}
-
 	}
 }

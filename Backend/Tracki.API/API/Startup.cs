@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,17 @@ namespace API
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 			});
+
+			services.AddIdentity<IdentityUser, IdentityRole>(options =>
+					options.Password = new PasswordOptions
+					{
+						RequireDigit = true,
+						RequiredLength = 8,
+						RequireLowercase = true,
+						RequireUppercase = true,
+						RequireNonAlphanumeric = false
+					})
+				.AddEntityFrameworkStores<ApplicationDbContext>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +63,8 @@ namespace API
 			app.UseRouting();
 
 			app.UseAuthorization();
+			app.UseAuthentication();
+			app.UseIdentityServer();
 
 			app.UseEndpoints(endpoints =>
 			{
