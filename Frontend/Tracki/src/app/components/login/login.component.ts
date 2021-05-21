@@ -1,5 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { UserInfo } from 'src/app/models/Userinfo';
+import { LoginService } from 'src/app/services/login/login.service'
 
 @Component({
   selector: 'app-login',
@@ -7,10 +9,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   submitted: boolean = false;
   loginForm:FormGroup;
+  login:UserInfo;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -25,9 +29,25 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    console.log("Email or username: " + this.loginForm.get('emailOrUsername').value);
-    console.log("Password: " + this.loginForm.get('password').value);
-    console.log("Remember me: " + this.loginForm.get('rememberMe').value);
+
+    const emailOrUsername = this.loginForm.get('emailOrUsername').value;
+    const password = this.loginForm.get('password').value;
+    const rememberMe = this.loginForm.get('rememberMe').value;
+    let login: UserInfo;
+
+    console.log("Email or username: " + emailOrUsername);
+    console.log("Password: " + password);
+    console.log("Remember me: " + rememberMe);
+
+    const emailReg = new RegExp("^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+    if(emailReg.test(emailOrUsername)) {
+      login = {email: emailOrUsername, userName: null ,password: password}
+    }
+    else {
+      login = {email: null, userName: emailOrUsername ,password: password }
+    }
+
+    this.loginService.login(login).subscribe((login: UserInfo) => this.login = login)
   }
 
 }

@@ -62,6 +62,12 @@ namespace API
 				   Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
 				   ClockSkew = TimeSpan.Zero
 			   });
+
+			services.AddCors(o => o.AddPolicy("AllAllowed", builder =>
+			builder.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader()));
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +83,8 @@ namespace API
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseCors("AllAllowed");
 
 			app.UseAuthorization();
 			app.UseAuthentication();

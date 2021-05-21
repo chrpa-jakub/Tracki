@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { UserInfo } from 'src/app/models/Userinfo';
+import { SignupService } from 'src/app/services/signup/signup.service'
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +12,7 @@ export class SignupComponent implements OnInit {
   submitted: boolean = false;
   signupForm:FormGroup;
 
-  constructor() { }
+  constructor(private signupService: SignupService) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -27,8 +29,17 @@ export class SignupComponent implements OnInit {
   
   onSubmit(): void {
     this.submitted = true;
-    console.log("Email: " + this.signupForm.get('email').value);
-    console.log("Username: " + this.signupForm.get('username').value);
-    console.log("Password: " + this.signupForm.get('password').value);
+    const email = this.signupForm.get('email').value;
+    const userName = this.signupForm.get('username').value;
+    const password = this.signupForm.get('password').value;
+
+    let signupInfo: UserInfo;
+
+    console.log("Email: " + email);
+    console.log("Username: " + userName);
+    console.log("Password: " + password);
+
+    signupInfo = { email: email, userName: userName, password: password}
+    this.signupService.signup(signupInfo).subscribe();
   }
 }
