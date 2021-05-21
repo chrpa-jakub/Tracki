@@ -1,4 +1,5 @@
 ﻿using System;
+using API.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TrackiBackEnd.Model
 {
-	public partial class ApplicationDbContext : IdentityDbContext
+	public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser, Role, Guid>
 	{
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

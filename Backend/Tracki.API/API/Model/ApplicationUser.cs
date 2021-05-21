@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TrackiBackEnd.Model
 {
-    public partial class ApplicationUser : IdentityUser
+    public partial class ApplicationUser : IdentityUser<Guid>
     {
         public int? PhotoId { get; set; }
     }
