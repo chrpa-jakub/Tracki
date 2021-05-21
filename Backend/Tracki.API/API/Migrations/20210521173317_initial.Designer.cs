@@ -10,7 +10,7 @@ using TrackiBackEnd.Model;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210521172758_initial")]
+    [Migration("20210521173317_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
