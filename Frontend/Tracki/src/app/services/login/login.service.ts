@@ -12,7 +12,8 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   login(login: UserInfo): Observable<UserInfo>{
-    const url = `${this.apiUrl}/create`
-    return this.http.put<UserInfo>(url, login);
+    const url = `${this.apiUrl}/Login`
+    this.http.get(url,  );
+    return this.http.post<UserInfo>(url, login);
   }
 }

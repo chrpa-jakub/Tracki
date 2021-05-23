@@ -34,20 +34,11 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.get('password').value;
     const rememberMe = this.loginForm.get('rememberMe').value;
     let login: UserInfo;
+    
+    let error: Boolean = false;
+    login = {email: emailOrUsername, userName: emailOrUsername, password: password }
 
-    console.log("Email or username: " + emailOrUsername);
-    console.log("Password: " + password);
-    console.log("Remember me: " + rememberMe);
-
-    const emailReg = new RegExp("^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-    if(emailReg.test(emailOrUsername)) {
-      login = {email: emailOrUsername, userName: null ,password: password}
-    }
-    else {
-      login = {email: null, userName: emailOrUsername ,password: password }
-    }
-
-    this.loginService.login(login).subscribe((login: UserInfo) => this.login = login)
+    console.log(this.loginService.login(login).subscribe((login: UserInfo) => this.login = login));
   }
 
 }

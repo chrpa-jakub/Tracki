@@ -5,11 +5,11 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
         <div class="form-group">
             <label for="emailOrUsername" class="email-label">
-                Email address or username<br>
+                Username<br>
             </label>
             <input id="emailOrUsername" type="text" formControlName="emailOrUsername" class="form-control login-input">
             <div *ngIf="emailOrUsername.errors?.required && submitted" class="alert">
-                Email or username is required.
+                Username is required.
             </div>
         </div>
         <div class="form-group">
