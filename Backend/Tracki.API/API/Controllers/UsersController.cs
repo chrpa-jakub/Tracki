@@ -47,32 +47,12 @@ namespace API.Controllers
 		[HttpPost("Login")]
 		public async Task<ActionResult<UserJwtToken>> Login([FromBody] UserInfo userInfo)
 		{
-
-			if (userInfo.Email != null)
-			{
-				Regex email = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-				Match match = email.Match(userInfo.Email);
-
-				if (!match.Success) { return BadRequest("Invalid email"); }
-
-				var result = await signInManager.PasswordSignInAsync(userInfo.Email,
-					userInfo.Password, isPersistent: false, lockoutOnFailure: false);
-
-				if (result.Succeeded) { return await BuildToken(userInfo); }
-			}
-
-			else
-			{
-				var result = await signInManager.PasswordSignInAsync(userInfo.UserName,
+			var result = await signInManager.PasswordSignInAsync(userInfo.UserName,
 				userInfo.Password, isPersistent: false, lockoutOnFailure: false);
 
-				if (result.Succeeded) { return await BuildToken(userInfo); }
-			}
-
-
+			if (result.Succeeded) { return await BuildToken(userInfo); }
 
 			return BadRequest("Invalid login attempt");
-
 		}
 
 		private async Task<UserJwtToken> BuildToken(UserInfo userInfo)
