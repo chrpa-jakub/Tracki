@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UserInfo } from 'src/app/models/Userinfo';
-import { LoginService } from 'src/app/services/login/login.service'
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
   login:UserInfo;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     let error: Boolean = false;
     login = {email: emailOrUsername, userName: emailOrUsername, password: password }
 
-    console.log(this.loginService.login(login).subscribe((login: UserInfo) => this.login = login));
+    console.log(this.userService.login(login).subscribe((login: UserInfo) => this.login = login));
   }
 
 }
