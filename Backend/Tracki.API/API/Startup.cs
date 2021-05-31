@@ -32,7 +32,7 @@ namespace API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+			services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
@@ -64,9 +64,10 @@ namespace API
 			   });
 
 			services.AddCors(o => o.AddPolicy("AllAllowed", builder =>
-			builder.AllowAnyOrigin()
+			builder.SetIsOriginAllowed(origin => true)
 					.AllowAnyMethod()
-					.AllowAnyHeader()));
+					.AllowAnyHeader()
+					.AllowCredentials()));
 
 		}
 

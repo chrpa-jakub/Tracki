@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { UserInfo } from 'src/app/models/Userinfo';
-import { UserService } from 'src/app/services/user/user.service'
+import { UserLoginInfo } from 'src/app/models/UserLoginInfo';
+import { AuthService } from 'src/app/services/auth-service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,10 @@ export class SignupComponent implements OnInit {
   submitted: boolean = false;
   signupForm:FormGroup;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private accountService: AuthService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -21,25 +25,28 @@ export class SignupComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
   }
+
+  signupErr: boolean = false;
   
   get email() { return this.signupForm.get('email') }  
   get username() { return this.signupForm.get('username') }  
   get password() { return this.signupForm.get('password') }
-
+  get signupError() { return this.signupErr }
   
   onSubmit(): void {
     this.submitted = true;
-    const email = this.signupForm.get('email').value;
-    const userName = this.signupForm.get('username').value;
-    const password = this.signupForm.get('password').value;
+    const email = this.signupForm.get('email');
+    const userName = this.signupForm.get('username');
+    const password = this.signupForm.get('password');
 
-    let signupInfo: UserInfo;
+    let signupInfo: UserLoginInfo;
 
-    console.log("Email: " + email);
-    console.log("Username: " + userName);
-    console.log("Password: " + password);
-
-    signupInfo = { email: email, userName: userName, password: password}
-    this.userService.signup(signupInfo).subscribe();
+    if(!(email.errors?.required || userName.errors?.required ||password.errors?.required))
+    {
+      signupInfo = { email: email.value, userName: userName.value, password: password.value}
+      this.accountService.signup(signupInfo).subscribe(res => {
+        this.router.navigate(['/login']);
+      });
+    }
   }
 }

@@ -22,6 +22,9 @@
             </div>
         </div>
         <div style="margin-top: 10px;"><a>Forgot your password?</a></div>
+        <div *ngIf="loginError" class="alert">
+            Incorrect username or password.
+        </div>
         <div style="display:flex; justify-content: space-between;">
             <label class="rememberme-checkbox"><div style="margin-top: 4px;">Remember me</div>
                 <input type="checkbox" formControlName="rememberMe">

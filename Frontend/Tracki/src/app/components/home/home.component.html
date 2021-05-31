@@ -8,10 +8,19 @@
                 <a routerLink="/premium" class="premium-text">PREMIUM</a>
             </div>
         </div>
-        <div class="header-btn-container">
-            <a routerLink="/login"><button class="btn login-button">LOG IN</button></a> 
-            <a routerLink="/signup"><button class="btn signup-button">SIGN UP</button></a>
+
+        <div *ngIf="isLoggedIn; else loggedOut" class="header-btn-container">
+            <div>{{ userBasicInfo.userName }}</div>
+            <button class="btn login-button" (click)="onLogOut()">LOG OUT</button>
         </div>
+        
+        <ng-template #loggedOut>
+            <div class="header-btn-container">
+                <a routerLink="/login"><button class="btn login-button">LOG IN</button></a> 
+                <a routerLink="/signup"><button class="btn signup-button">SIGN UP</button></a>
+            </div>
+        </ng-template>
+
     </div>
     <div class="body-container">
 
