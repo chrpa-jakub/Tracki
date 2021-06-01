@@ -41,31 +41,58 @@ namespace API.Controllers
 		{
 			var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
 			var result = await userManager.CreateAsync(user, model.Password);
+			
+			if (result.Succeeded) 
+			{
+				return Ok(result); 
+			}
 
-			if (result.Succeeded) { return await BuildToken(model); }
-
-			return BadRequest("Username or password invalid");
+			return BadRequest("Invalid sign up attempt");
 		}
 
 		[HttpPost("Login")]
 		public async Task<ActionResult<UserJwtToken>> Login([FromBody] UserSignupInfo userInfo)
 		{
-			var result = await signInManager.PasswordSignInAsync(userInfo.UserName,
-				userInfo.Password, isPersistent: false, lockoutOnFailure: false);
+			//var result = await signInManager.PasswordSignInAsync(userInfo.UserName,
+			//	userInfo.Password, isPersistent: false, lockoutOnFailure: false);
 
-			if (result.Succeeded) { return await BuildToken(userInfo); }
+			//if (result.Succeeded) 
+			//{ 
+			//	return await BuildToken(userInfo); 
+			//}
 
-			return BadRequest("Invalid login attempt");
+			//return BadRequest("Invalid login attempt");
+
+			var user = await userManager.FindByNameAsync(userInfo.UserName);
+
+			if (user != null && await userManager.CheckPasswordAsync(user, userInfo.Password))
+			{
+				var tokenDescriptor = new SecurityTokenDescriptor
+				{
+					Subject = new ClaimsIdentity(new Claim[]
+					{
+						new Claim("UserID",user.Id.ToString())
+					}),
+					Expires = DateTime.UtcNow.AddDays(1),
+					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"])), SecurityAlgorithms.HmacSha256Signature)
+				};
+				var tokenHandler = new JwtSecurityTokenHandler();
+				var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+				var token = tokenHandler.WriteToken(securityToken);
+				return Ok(new { token });
+			}
+			else
+				return BadRequest(new { message = "Username or password is incorrect." });
 		}
 
 		private async Task<UserJwtToken> BuildToken(UserSignupInfo userInfo)
 		{
 			var claims = new List<Claim>()
 			{
-				new Claim(ClaimTypes.Name, userInfo.UserName),
-				new Claim(ClaimTypes.Email, userInfo.Email),
+				//new Claim(ClaimTypes.Name, userInfo.UserName),
+				//new Claim(ClaimTypes.Email, userInfo.Email),
+				//new Claim(ClaimTypes.Role, "User")
 				new Claim(ClaimTypes.Role, "User")
-
 			};
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"]));

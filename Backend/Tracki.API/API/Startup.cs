@@ -2,6 +2,7 @@ using API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,18 @@ namespace API
 				   ClockSkew = TimeSpan.Zero
 			   });
 
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.LoginPath = new PathString("/api/auth");
+				options.AccessDeniedPath = new PathString("/api/auth");
+
+				options.Events.OnRedirectToLogin = context =>
+				{
+					context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+					return Task.CompletedTask;
+				};
+			});
+
 			services.AddCors(o => o.AddPolicy("AllAllowed", builder =>
 			builder.SetIsOriginAllowed(origin => true)
 					.AllowAnyMethod()
@@ -82,14 +95,10 @@ namespace API
 			}
 
 			app.UseHttpsRedirection();
-
-			app.UseRouting();
-
-			app.UseCors("AllAllowed");
-
-			app.UseAuthorization();
+            app.UseRouting();
 			app.UseAuthentication();
-
+			app.UseAuthorization();
+			app.UseCors("AllAllowed");
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

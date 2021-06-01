@@ -9,7 +9,7 @@ import { UserBasicInfo } from '../models/UserBasicInfo';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'https://localhost:44332/api';
+  private baseUrl = 'https://localhost:5001/api';
 
   httpOptions = {
     withCredentials: true,
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login(login: UserLoginInfo): Observable<UserLoginInfo>{
-    const url = `${this.baseUrl}/auth/Login`;
+    const url = `${this.baseUrl}/auth/login`;
     return this.http.post<UserLoginInfo>(url, login, this.httpOptions);
   }
 
