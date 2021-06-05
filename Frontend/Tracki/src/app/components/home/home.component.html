@@ -4,36 +4,28 @@
             <a routerLink="/" class="logo-text">Tracki</a>
             <div class="links-container">
                 <a routerLink="/" style="color: black">Home</a>
-                <a routerLink="/contact" style="color: black">Contact</a>
-                <a routerLink="/premium" class="premium-text">PREMIUM</a>
+                <a routerLink="" style="color: black">Your Library</a>
+                <input type="text" placeholder="Search.." class="search-bar">
             </div>
         </div>
-
         <div *ngIf="isLoggedIn; else loggedOut" class="header-btn-container">
             <button class="btn notifications-button">
                 <i class="fas fa-bell" style="margin-right: 10px"></i>
                 Notifications
             </button>
             <button class="btn premium-button">Premium</button>
-            <button class="btn user-button" (click)="onUsernameClick()">{{ userBasicInfo.userName }}</button>
-
-          
+            <button class="btn user-button" (click)="onUsernameClick()">{{ userBasicInfo.userName }}</button>      
             <div *ngIf="isUserMenuVisible" class="user-menu">
-              <button class="btn user-menu-button" (click)="onLogOut()">Account</button>
-              <button class="btn user-menu-button" (click)="onLogOut()">Profile</button>
+                <a routerLink="/account"><button class="btn user-menu-button">Account</button></a> 
+                <a routerLink="/profile"><button class="btn user-menu-button">Profile</button></a> 
               <button class="btn user-menu-button" (click)="onLogOut()">Log Out</button>
             </div>
         </div>   
-
         <ng-template #loggedOut>
             <div class="header-btn-container">
                 <a routerLink="/login"><button class="btn login-button">LOG IN</button></a> 
                 <a routerLink="/signup"><button class="btn signup-button">SIGN UP</button></a>
             </div>
         </ng-template>
-
-    </div>
-    <div class="body-container">
-
     </div>
 </div>

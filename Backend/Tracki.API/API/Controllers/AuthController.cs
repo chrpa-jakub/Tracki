@@ -36,7 +36,7 @@ namespace API.Controllers
 			this.configuration = configuration;
 		}
 
-		[HttpPost("Create")]
+		[HttpPost("signup")]
 		public async Task<ActionResult<UserJwtToken>> CreateUser([FromBody] UserSignupInfo model)
 		{
 			var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
@@ -50,19 +50,9 @@ namespace API.Controllers
 			return BadRequest("Invalid sign up attempt");
 		}
 
-		[HttpPost("Login")]
+		[HttpPost("login")]
 		public async Task<ActionResult<UserJwtToken>> Login([FromBody] UserSignupInfo userInfo)
 		{
-			//var result = await signInManager.PasswordSignInAsync(userInfo.UserName,
-			//	userInfo.Password, isPersistent: false, lockoutOnFailure: false);
-
-			//if (result.Succeeded) 
-			//{ 
-			//	return await BuildToken(userInfo); 
-			//}
-
-			//return BadRequest("Invalid login attempt");
-
 			var user = await userManager.FindByNameAsync(userInfo.UserName);
 
 			if (user != null && await userManager.CheckPasswordAsync(user, userInfo.Password))
@@ -85,34 +75,5 @@ namespace API.Controllers
 			else
 				return BadRequest(new { message = "Username or password is incorrect." });
 		}
-
-		//private async Task<UserJwtToken> BuildToken(UserSignupInfo userInfo)
-		//{
-		//	var claims = new List<Claim>()
-		//	{
-		//		new Claim(ClaimTypes.Name, userInfo.UserName),
-		//		new Claim(ClaimTypes.Email, userInfo.Email),
-		//		new Claim(ClaimTypes.Role, "User")
-		//	};
-
-		//	var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"]));
-		//	var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-		//	var expiration = DateTime.UtcNow.AddYears(1);
-
-		//	JwtSecurityToken token = new JwtSecurityToken(
-		//	   issuer: null,
-		//	   audience: null,
-		//	   claims: claims,
-		//	   expires: expiration,
-		//	   signingCredentials: creds);
-
-		//	return new UserJwtToken()
-		//	{
-		//		Token = new JwtSecurityTokenHandler().WriteToken(token),
-		//		Expiration = expiration
-		//	};
-
-		//}
 	}
 }

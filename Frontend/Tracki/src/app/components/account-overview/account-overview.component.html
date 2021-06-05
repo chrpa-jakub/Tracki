@@ -1,0 +1,24 @@
+<div class="account-overview-container">
+    <div class="info-text">Information about your account</div>
+    <form [formGroup]="accountOverviewForm" (ngSubmit)="onSaveChanges()" class="formitko">
+        <table class="account-info">
+            <tr>
+                <td>Username</td>
+                <td><input type=text formControlName="username" class="input" (ngModelChange)="onChange()"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" formControlName="email" class="input" (ngModelChange)="onChange()"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="text" placeholder="Type new password here" formControlName="password" class="input" (ngModelChange)="onChange()">
+                </td>
+            </tr>
+        </table>
+        <span *ngIf="passwordErr" class="alert">Password must be atleast 6 characters long.</span>
+    </form>
+    <button *ngIf="!inputChanged"class="btn save-changes-button-gray" (click)="onSaveChanges()">SAVE CHANGES</button>
+    <button *ngIf="inputChanged"class="btn save-changes-button" (click)="onSaveChanges()">SAVE CHANGES</button>
+</div>

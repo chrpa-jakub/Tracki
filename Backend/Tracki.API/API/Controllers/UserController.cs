@@ -36,7 +36,7 @@ namespace API.Controllers
 		[HttpGet]
 		public async Task<ActionResult<UserBasicInfo>> GetUserProfile()
 		{
-			var claimsIdentity = this.User.Identity as ClaimsIdentity;
+			var claimsIdentity = User.Identity as ClaimsIdentity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
 			var user = userManager.FindByIdAsync(userId);
 

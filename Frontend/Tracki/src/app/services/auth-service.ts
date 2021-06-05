@@ -20,7 +20,7 @@ export class AuthService {
      private jwtHelper: JwtHelperService) { }
 
   signup(login: UserLoginInfo): Observable<UserLoginInfo>{  
-    return this.http.post<UserLoginInfo>(`${this.baseUrl}/auth/create`, login, this.httpOptions);
+    return this.http.post<UserLoginInfo>(`${this.baseUrl}/auth/signup`, login, this.httpOptions);
   }
 
   login(login: UserLoginInfo): Observable<UserLoginInfo>{
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   // For login we just remove the jwt token from local storage
-  logout() {
+  logout(): void {
     localStorage.removeItem("jwt");
   }
 

@@ -12,15 +12,14 @@ import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
-import { UserComponent } from './components/user/user.component';
 import { AuthInterceptor } from "src/app/services/auth-interceptor.service";
 import { AuthService } from './services/auth-service';
+import { AccountOverviewComponent } from './components/account-overview/account-overview.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'users', component: UserComponent, canActivate: [AuthGuard] }
+  { path: 'account', component: AccountOverviewComponent }
 ]
 
 export function tokenGetter() {
@@ -33,7 +32,7 @@ export function tokenGetter() {
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    UserComponent,
+    AccountOverviewComponent,
   ],
   imports: [
     BrowserModule,

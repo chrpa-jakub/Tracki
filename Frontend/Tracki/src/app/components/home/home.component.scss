@@ -13,7 +13,6 @@ $background-color: #F2F2F2;
     font-size: 1rem;
 }
 
-
 .header-container {
     height: 60px;
     width: 100%;
@@ -46,15 +45,23 @@ $background-color: #F2F2F2;
     margin-left: 100px;
 }
 
-.links-container>a {
+.links-container>* {
     font-size: 1.3rem;
     margin-left: 20px;
     text-decoration: none;
 }
 
-.premium-text {
-    color: $base-color-1;
-    font-weight: bold;
+.search-bar {
+    border-radius: 25px;
+    padding: 10px;
+    border: none;
+    margin-top: 7px;
+    font-size: 1.2rem;
+    background-color: $background-color;
+}
+
+.search-bar:focus {
+    outline: none;
 }
 
 .header-btn-container {

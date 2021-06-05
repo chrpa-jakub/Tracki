@@ -35,6 +35,15 @@ export class HomeComponent implements OnInit {
     this.authService.logout();
   }
 
+  onAccountClick() {
+    this.router.navigateByUrl("/account");
+    console.log("account");
+  }
+
+  onProfileClick() {
+    this.router.navigateByUrl("/profile");
+  }
+
   onUsernameClick() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
   }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
+  
   submitted: boolean = false;
   signupForm:FormGroup;
 

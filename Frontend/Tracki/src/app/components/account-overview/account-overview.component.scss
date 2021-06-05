@@ -1,0 +1,68 @@
+$base-color-1: #30B052;
+$base-color-2: #56E57D;
+$background-color: #F2F2F2;
+
+.account-overview-container {
+
+}
+
+.info-text {
+    font-size: 1.6rem;
+    color: $base-color-1;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.account-info {
+    font-size: 1.4rem;
+}
+
+.account-info td {
+    padding-right: 50px;
+    padding-bottom: 10px;
+}
+
+.input {
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    margin-top: 8px;
+    font-size: 1.2rem;
+    background-color: white;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.save-changes-button {
+    display: block;
+    margin: 0 auto;
+    background-color: $base-color-1;
+    border: 2px solid $base-color-1;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 20px;;
+    font-size: 1rem;
+}
+
+.save-changes-button-gray {
+    background-color: $background-color;
+    border: 2px solid gray;
+    color: gray;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+}
