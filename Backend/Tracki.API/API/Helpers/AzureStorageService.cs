@@ -44,7 +44,7 @@ namespace API.Helpers
             if (extension[0] != '.') {extension = "." + extension;}
             var client = new BlobContainerClient(connectionString, containerName);
             await client.CreateIfNotExistsAsync();
-            client.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+            await client.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
             var fileName = $"{Guid.NewGuid()}{extension}";
             var blob = client.GetBlobClient(fileName);
             using (var ms = new MemoryStream(content))
