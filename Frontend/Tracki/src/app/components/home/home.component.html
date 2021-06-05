@@ -10,10 +10,21 @@
         </div>
 
         <div *ngIf="isLoggedIn; else loggedOut" class="header-btn-container">
-            <div>{{ userBasicInfo.userName }}</div>
-            <button class="btn login-button" (click)="onLogOut()">LOG OUT</button>
-        </div>
-        
+            <button class="btn notifications-button">
+                <i class="fas fa-bell" style="margin-right: 10px"></i>
+                Notifications
+            </button>
+            <button class="btn premium-button">Premium</button>
+            <button class="btn user-button" (click)="onUsernameClick()">{{ userBasicInfo.userName }}</button>
+
+          
+            <div *ngIf="isUserMenuVisible" class="user-menu">
+              <button class="btn user-menu-button" (click)="onLogOut()">Account</button>
+              <button class="btn user-menu-button" (click)="onLogOut()">Profile</button>
+              <button class="btn user-menu-button" (click)="onLogOut()">Log Out</button>
+            </div>
+        </div>   
+
         <ng-template #loggedOut>
             <div class="header-btn-container">
                 <a routerLink="/login"><button class="btn login-button">LOG IN</button></a> 

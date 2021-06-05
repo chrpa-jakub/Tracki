@@ -20,8 +20,8 @@ namespace API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize(AuthenticationSchemes = "Bearer")]
 	[EnableCors("AllAllowed")]
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	public class UserController : ControllerBase
 	{
 		private readonly ApplicationDbContext context;
@@ -36,13 +36,21 @@ namespace API.Controllers
 		[HttpGet]
 		public async Task<ActionResult<UserBasicInfo>> GetUserProfile()
 		{
-			string userID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var user = await userManager.FindByNameAsync(userID);
-			return new UserBasicInfo
+			var claimsIdentity = this.User.Identity as ClaimsIdentity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+			var user = userManager.FindByIdAsync(userId);
+
+			if(user != null)
 			{
-				UserName = user.UserName,
-				Email = user.Email,
-			};
+				return new UserBasicInfo
+				{
+					UserName = user.Result.UserName,
+					Email = user.Result.Email,
+				};
+			}
+
+			return BadRequest();
+
 		}
 	}
 }

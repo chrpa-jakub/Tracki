@@ -41,11 +41,11 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes, { enableTracing: true }),
+    RouterModule.forRoot(routes, { enableTracing: false }),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ["localhost:5000"],
+        whitelistedDomains: ["localhost:5001"],
         blacklistedRoutes: []
       }
     })

@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   signupForm:FormGroup;
 
   constructor(
-    private accountService: AuthService,
+    private authService: AuthService,
     private router: Router
     ) { }
 
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
     if(!(email.errors?.required || userName.errors?.required ||password.errors?.required))
     {
       signupInfo = { email: email.value, userName: userName.value, password: password.value}
-      this.accountService.signup(signupInfo).subscribe(res => {
+      this.authService.signup(signupInfo).subscribe(res => {
         this.router.navigate(['/login']);
       });
     }

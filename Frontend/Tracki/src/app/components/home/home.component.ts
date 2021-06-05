@@ -11,7 +11,9 @@ import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 })
 export class HomeComponent implements OnInit {
 
-  userBasicInfo: UserBasicInfo;
+  userBasicInfo: UserBasicInfo = new UserBasicInfo();
+
+  isUserMenuVisible: boolean = false;
 
   constructor(private jwtHelper: JwtHelperService,
               private authService: AuthService,
@@ -21,10 +23,6 @@ export class HomeComponent implements OnInit {
     this.authService.getUserProfile().subscribe(
       res => {
         this.userBasicInfo = res;
-        console.log(res);
-      },
-      err => {
-        console.log(err);
       }
     )
   }
@@ -35,6 +33,10 @@ export class HomeComponent implements OnInit {
 
   onLogOut() {
     this.authService.logout();
+  }
+
+  onUsernameClick() {
+    this.isUserMenuVisible = !this.isUserMenuVisible;
   }
 
 }

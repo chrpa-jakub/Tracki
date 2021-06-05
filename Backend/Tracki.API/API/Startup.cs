@@ -77,7 +77,7 @@ namespace API
 			});
 
 			services.AddCors(o => o.AddPolicy("AllAllowed", builder =>
-			builder.SetIsOriginAllowed(origin => true)
+			builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
 					.AllowAnyMethod()
 					.AllowAnyHeader()
 					.AllowCredentials()));
@@ -94,11 +94,11 @@ namespace API
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 			}
 
-			app.UseHttpsRedirection();
             app.UseRouting();
+			app.UseCors("AllAllowed");
 			app.UseAuthentication();
 			app.UseAuthorization();
-			app.UseCors("AllAllowed");
+			app.UseHttpsRedirection();
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

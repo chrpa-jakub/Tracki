@@ -2,6 +2,18 @@ $base-color-1: #30B052;
 $base-color-2: #56E57D;
 $background-color: #F2F2F2;
 
+@mixin roundButton {
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+
 .header-container {
     height: 60px;
     width: 100%;
@@ -46,6 +58,9 @@ $background-color: #F2F2F2;
 }
 
 .header-btn-container {
+    position: relative;
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 }
 
@@ -54,19 +69,11 @@ $background-color: #F2F2F2;
 }
 
 .login-button {
+    @include roundButton();
     background-color: white;
     border: 2px solid $base-color-1;
     color: $base-color-1;
     padding: 10px 30px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 1rem;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    border-radius: 20px;
-    font-weight: bold;
 }
 
 .login-button:hover {
@@ -74,20 +81,43 @@ $background-color: #F2F2F2;
     color:white;
 }
 
-.signup-button {
+.signup-button{
+    @include roundButton();
     background-color: $base-color-1;
     border: 2px solid $base-color-1;
     color: white;
     padding: 10px 30px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 1rem;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    border-radius: 20px;
-    font-weight: bold;
+}
+
+.user-menu-button:hover {
+    background-color: $background-color;
+}
+
+
+.logout-button:hover {
+    border: none;
+    background-color: $background-color;
+}
+
+.user-button {
+    @include roundButton();
+    background-color: white;
+    border: 2px solid $base-color-1;
+    font-size: 1.2rem;
+}
+.premium-button {
+    @include roundButton();
+    background-color: $base-color-1;
+    border: 2px solid $base-color-1;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.notifications-button {
+    @include roundButton();
+    background-color: white;
+    border: 1px solid gray;
+    font-size: 1.2rem;
 }
 
 .signup-button:hover {
@@ -95,8 +125,20 @@ $background-color: #F2F2F2;
     border-color: $base-color-2;
 }
 
-.welcome-text {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
+.user-menu {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+}
+
+.user-menu-button {
+    text-align: left;
+    min-width: 200px;
+    font-size: 1rem;
+    border: none;
+    background-color: white;
+    padding: 20px 15px;
 }

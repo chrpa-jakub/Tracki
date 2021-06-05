@@ -71,9 +71,10 @@ namespace API.Controllers
 				{
 					Subject = new ClaimsIdentity(new Claim[]
 					{
-						new Claim("UserID",user.Id.ToString())
+						new Claim(ClaimTypes.Name, user.Id.ToString())
 					}),
-					Expires = DateTime.UtcNow.AddDays(1),
+
+					Expires = DateTime.UtcNow.AddDays(7),
 					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"])), SecurityAlgorithms.HmacSha256Signature)
 				};
 				var tokenHandler = new JwtSecurityTokenHandler();
@@ -85,34 +86,33 @@ namespace API.Controllers
 				return BadRequest(new { message = "Username or password is incorrect." });
 		}
 
-		private async Task<UserJwtToken> BuildToken(UserSignupInfo userInfo)
-		{
-			var claims = new List<Claim>()
-			{
-				//new Claim(ClaimTypes.Name, userInfo.UserName),
-				//new Claim(ClaimTypes.Email, userInfo.Email),
-				//new Claim(ClaimTypes.Role, "User")
-				new Claim(ClaimTypes.Role, "User")
-			};
+		//private async Task<UserJwtToken> BuildToken(UserSignupInfo userInfo)
+		//{
+		//	var claims = new List<Claim>()
+		//	{
+		//		new Claim(ClaimTypes.Name, userInfo.UserName),
+		//		new Claim(ClaimTypes.Email, userInfo.Email),
+		//		new Claim(ClaimTypes.Role, "User")
+		//	};
 
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"]));
-			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+		//	var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"]));
+		//	var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-			var expiration = DateTime.UtcNow.AddYears(1);
+		//	var expiration = DateTime.UtcNow.AddYears(1);
 
-			JwtSecurityToken token = new JwtSecurityToken(
-			   issuer: null,
-			   audience: null,
-			   claims: claims,
-			   expires: expiration,
-			   signingCredentials: creds);
+		//	JwtSecurityToken token = new JwtSecurityToken(
+		//	   issuer: null,
+		//	   audience: null,
+		//	   claims: claims,
+		//	   expires: expiration,
+		//	   signingCredentials: creds);
 
-			return new UserJwtToken()
-			{
-				Token = new JwtSecurityTokenHandler().WriteToken(token),
-				Expiration = expiration
-			};
+		//	return new UserJwtToken()
+		//	{
+		//		Token = new JwtSecurityTokenHandler().WriteToken(token),
+		//		Expiration = expiration
+		//	};
 
-		}
+		//}
 	}
 }
