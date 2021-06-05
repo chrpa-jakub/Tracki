@@ -42,14 +42,14 @@ namespace API.Helpers
         {
             var client = new BlobContainerClient(connectionString, containerName);
             await client.CreateIfNotExistsAsync();
-            client.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+            await client.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
             var fileName = $"{Guid.NewGuid()}{extension}";
             var blob = client.GetBlobClient(fileName);
             using (var ms = new MemoryStream(content))
             {
                 await blob.UploadAsync(ms);
             }
-            Console.WriteLine(blob.Uri.ToString());
+            //Console.WriteLine(blob.Uri.ToString());
             return blob.Uri.ToString();
 
         }
