@@ -7,6 +7,6 @@ namespace API.Models
 {
     public partial class ApplicationUser : IdentityUser
     {
-        public int? PhotoId { get; set; }
+        public string Photo { get; set; }
     }
 }

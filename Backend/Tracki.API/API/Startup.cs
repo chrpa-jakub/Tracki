@@ -1,3 +1,4 @@
+using API.Helpers;
 using API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +41,7 @@ namespace API
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 			});
 
-			services.AddIdentity<IdentityUser, IdentityRole>(options =>
+			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 					options.Password = new PasswordOptions
 					{
 						RequireDigit = false,
@@ -49,7 +50,8 @@ namespace API
 						RequireUppercase = false,
 						RequireNonAlphanumeric = false
 					})
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			   .AddJwtBearer(options =>
@@ -68,7 +70,7 @@ namespace API
 			{
 				options.LoginPath = new PathString("/api/auth");
 				options.AccessDeniedPath = new PathString("/api/auth");
-
+				;
 				options.Events.OnRedirectToLogin = context =>
 				{
 					context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -81,6 +83,9 @@ namespace API
 					.AllowAnyMethod()
 					.AllowAnyHeader()
 					.AllowCredentials()));
+
+			services.AddScoped<JWTTokenHelper>();
+			services.AddScoped<AzureStorageService>();
 
 		}
 

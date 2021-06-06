@@ -9,7 +9,7 @@ import { UserBasicInfo } from '../models/UserBasicInfo';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'https://localhost:44317/api';
+  private baseUrl:string = 'https://localhost:5001/api/auth';
 
   httpOptions = {
     withCredentials: true,
@@ -20,11 +20,11 @@ export class AuthService {
      private jwtHelper: JwtHelperService) { }
 
   signup(login: UserLoginInfo): Observable<UserLoginInfo>{  
-    return this.http.post<UserLoginInfo>(`${this.baseUrl}/auth/signup`, login, this.httpOptions);
+    return this.http.post<UserLoginInfo>(`${this.baseUrl}/signup`, login, this.httpOptions);
   }
 
   login(login: UserLoginInfo): Observable<UserLoginInfo>{
-    return this.http.post<UserLoginInfo>(`${this.baseUrl}/auth/login`, login, this.httpOptions);
+    return this.http.post<UserLoginInfo>(`${this.baseUrl}/login`, login, this.httpOptions);
   }
 
   // For login we just remove the jwt token from local storage
@@ -40,9 +40,4 @@ export class AuthService {
     }
     return false;
   }
-
-  getUserProfile(): Observable<UserBasicInfo> {
-    return this.http.get<UserBasicInfo>(`${this.baseUrl}/user`);
-  }
-
 }

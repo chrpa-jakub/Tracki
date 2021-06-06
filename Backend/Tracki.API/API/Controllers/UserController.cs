@@ -32,25 +32,5 @@ namespace API.Controllers
 			this.context = context;
 			this.userManager = userManager;
 		}
-
-		[HttpGet]
-		public async Task<ActionResult<UserBasicInfo>> GetUserProfile()
-		{
-			var claimsIdentity = User.Identity as ClaimsIdentity;
-			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
-			var user = userManager.FindByIdAsync(userId);
-
-			if(user != null)
-			{
-				return new UserBasicInfo
-				{
-					UserName = user.Result.UserName,
-					Email = user.Result.Email,
-				};
-			}
-
-			return BadRequest();
-
-		}
 	}
 }

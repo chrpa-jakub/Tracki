@@ -30,7 +30,6 @@ namespace API.Models
 		}
 
 		public DbSet<Artist> Artists { get; set; }
-		public DbSet<Photo> Photos { get; set; }
 		public DbSet<Release> Releases { get; set; }
 		public DbSet<ReleaseType> ReleaseTypes { get; set; }
 		public DbSet<Song> Songs { get; set; }

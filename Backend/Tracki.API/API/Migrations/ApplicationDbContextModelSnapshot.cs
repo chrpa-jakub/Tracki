@@ -42,21 +42,6 @@ namespace API.Migrations
                     b.ToTable("Artists");
                 });
 
-            modelBuilder.Entity("API.Models.Photo", b =>
-                {
-                    b.Property<int>("PhotoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PhotoId");
-
-                    b.ToTable("Photos");
-                });
-
             modelBuilder.Entity("API.Models.Release", b =>
                 {
                     b.Property<int>("ReleaseId")
@@ -332,8 +317,8 @@ namespace API.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("PhotoId")
-                        .HasColumnType("int");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });

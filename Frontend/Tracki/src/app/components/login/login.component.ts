@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     {
       let login: UserLoginInfo;
     
-      login = {email: emailOrUsername.value, userName: emailOrUsername.value, password: password.value }
+      login = {email: emailOrUsername.value, userName: emailOrUsername.value, password: password.value, photo: "" }
   
       this.authService.login(login).subscribe(res => {
         const token = (<any>res).token;

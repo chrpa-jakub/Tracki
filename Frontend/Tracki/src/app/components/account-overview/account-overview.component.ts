@@ -3,6 +3,8 @@ import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from 'src/app/services/auth-service'
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/services/account.service';
+import { UserLoginInfo } from 'src/app/models/UserLoginInfo';
 
 @Component({
   selector: 'app-account-overview',
@@ -12,12 +14,13 @@ import { Router } from '@angular/router';
 export class AccountOverviewComponent implements OnInit {
 
   userBasicInfo: UserBasicInfo = new UserBasicInfo();
-  accountOverviewForm:FormGroup;
-  inputChanged:boolean = false;
-  passwordErr:boolean = false;
+  accountOverviewForm: FormGroup;
+  inputChanged: boolean = false;
+  passwordErr :boolean = false;
 
   constructor(
     private authService: AuthService,
+    private accountService: AccountService,
     private router: Router,
     ) { }
 
@@ -28,7 +31,7 @@ export class AccountOverviewComponent implements OnInit {
       password: new FormControl('')
     });
 
-    this.authService.getUserProfile().subscribe(
+    this.accountService.getAccountOverview().subscribe(
       res => {
         this.userBasicInfo.userName = res.userName;
         this.userBasicInfo.email = res.email;
@@ -38,30 +41,54 @@ export class AccountOverviewComponent implements OnInit {
     )
   }
 
-  onChange(): void {
-    const formUsername = this.accountOverviewForm.get("username").value;
-    const formEmail = this.accountOverviewForm.get("email").value;
-    const formPassword = this.accountOverviewForm.get("password").value
+  get formUsername() { return this.accountOverviewForm.get('username').value } 
+  get formEmail() { return this.accountOverviewForm.get('email').value }   
+  get formPassword() { return this.accountOverviewForm.get('password').value }
 
-    if((this.userBasicInfo.userName != formUsername && formPassword == "" || this.userBasicInfo.email != formEmail && formPassword == ""
-      || (formPassword != "" && formPassword.length >= 6)) 
-      && (formUsername != "" && formEmail != "")
+  onChange(): void {
+    /*const formUsername = this.accountOverviewForm.get("username").value;
+    const formEmail = this.accountOverviewForm.get("email").value;
+    const formPassword = this.accountOverviewForm.get("password").value*/
+
+    if((this.userBasicInfo.userName != this.formUsername && this.formPassword == "" || this.userBasicInfo.email != this.formEmail && this.formPassword == ""
+      || (this.formPassword != "" && this.formPassword.length >= 6)) 
+      && (this.formUsername != "" && this.formEmail != "")
     ) {
       this.inputChanged = true;
     }
     else { this.inputChanged = false }
   }
 
+  onRevertChanges(): void {
+    this.accountOverviewForm.controls['username'].setValue(this.userBasicInfo.userName);
+    this.accountOverviewForm.controls['email'].setValue(this.userBasicInfo.email);
+    this.accountOverviewForm.controls['password'].setValue("");
+  }
+
+  imageSrc: string;
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imageSrc = <string>event.target.result;
+      }
+    }
+  }
+
   onSaveChanges(): void {
     const formPassword = this.accountOverviewForm.get("password").value
 
-    if((formPassword == "") 
-    || (formPassword != "" && formPassword.length >= 6)) {
-      console.log("success");
-    }
-    else {
-      console.log("fucl");
-      this.passwordErr = true;
+    if(this.inputChanged) {
+      let userInfo: UserLoginInfo;
+      userInfo = {userName: this.formUsername, email: this.formEmail, 
+        password: this.formPassword, photo: this.imageSrc } 
+      this.accountService.editAccount(userInfo).subscribe(res => {
+        const token = (<any>res).token;
+        localStorage.setItem("jwt", token);
+      });
     }
   }
 

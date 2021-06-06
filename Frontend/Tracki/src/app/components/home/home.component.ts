@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service'
+import { AccountService } from 'src/app/services/account.service'
 import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 
 @Component({
@@ -15,12 +16,12 @@ export class HomeComponent implements OnInit {
 
   isUserMenuVisible: boolean = false;
 
-  constructor(private jwtHelper: JwtHelperService,
+  constructor(private accountService: AccountService,
               private authService: AuthService,
               private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.getUserProfile().subscribe(
+    this.accountService.getAccountOverview().subscribe(
       res => {
         this.userBasicInfo = res;
       }

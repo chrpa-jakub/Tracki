@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -24,23 +25,26 @@ namespace API.Controllers
 	public class AuthController : ControllerBase
 	{
 		private readonly ApplicationDbContext context;
-		private readonly UserManager<IdentityUser> userManager;
-		private readonly SignInManager<IdentityUser> signInManager;
+		private readonly UserManager<ApplicationUser> userManager;
+		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly IConfiguration configuration;
+		private readonly JWTTokenHelper jwtHelper;
 
-		public AuthController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+		public AuthController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, 
+			IConfiguration configuration, JWTTokenHelper jwtHelper)
 		{
 			this.context = context;
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 			this.configuration = configuration;
+			this.jwtHelper = jwtHelper;
 		}
 
 		[HttpPost("signup")]
-		public async Task<ActionResult<UserJwtToken>> CreateUser([FromBody] UserSignupInfo model)
+		public async Task<ActionResult<UserJwtToken>> CreateUser([FromBody] UserSignupInfo userInfo)
 		{
-			var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
-			var result = await userManager.CreateAsync(user, model.Password);
+			var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email };
+			var result = await userManager.CreateAsync(user, userInfo.Password);
 			
 			if (result.Succeeded) 
 			{
@@ -57,20 +61,8 @@ namespace API.Controllers
 
 			if (user != null && await userManager.CheckPasswordAsync(user, userInfo.Password))
 			{
-				var tokenDescriptor = new SecurityTokenDescriptor
-				{
-					Subject = new ClaimsIdentity(new Claim[]
-					{
-						new Claim(ClaimTypes.Name, user.Id.ToString())
-					}),
-
-					Expires = DateTime.UtcNow.AddDays(7),
-					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:key"])), SecurityAlgorithms.HmacSha256Signature)
-				};
-				var tokenHandler = new JwtSecurityTokenHandler();
-				var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-				var token = tokenHandler.WriteToken(securityToken);
-				return Ok(new { token });
+				var token = jwtHelper.GenerateToken(user);
+				return Ok(new { token });;
 			}
 			else
 				return BadRequest(new { message = "Username or password is incorrect." });

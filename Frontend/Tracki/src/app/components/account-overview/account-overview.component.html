@@ -16,9 +16,17 @@
                     <input type="text" placeholder="Type new password here" formControlName="password" class="input" (ngModelChange)="onChange()">
                 </td>
             </tr>
+            <tr>
+                <td>Profile photo</td>
+                <td>
+                    <img [src]="imageSrc" height="200" class="profile-photo"> <br/>
+                    <input type="file" (change)="onFileSelected($event)">
+                </td>
+            </tr>
         </table>
         <span *ngIf="passwordErr" class="alert">Password must be atleast 6 characters long.</span>
     </form>
-    <button *ngIf="!inputChanged"class="btn save-changes-button-gray" (click)="onSaveChanges()">SAVE CHANGES</button>
-    <button *ngIf="inputChanged"class="btn save-changes-button" (click)="onSaveChanges()">SAVE CHANGES</button>
+    <button  class="btn revert-changes-button" (click)="onRevertChanges()">Revert Changes</button>
+    <button *ngIf="!inputChanged" class="btn save-changes-button-gray" (click)="onSaveChanges()">SAVE CHANGES</button>
+    <button *ngIf="inputChanged" class="btn save-changes-button" (click)="onSaveChanges()">SAVE CHANGES</button>
 </div>

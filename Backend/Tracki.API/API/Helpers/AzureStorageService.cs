@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Helpers
 {
-    public class AzureStorageService : IFileStorageService
+    public class AzureStorageService
     {
         private string connectionString;
 

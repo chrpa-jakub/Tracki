@@ -14,6 +14,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthInterceptor } from "src/app/services/auth-interceptor.service";
 import { AuthService } from './services/auth-service';
+import { AccountService } from './services/account.service';
 import { AccountOverviewComponent } from './components/account-overview/account-overview.component';
 
 const routes: Routes = [
@@ -49,7 +50,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthService, {
+  providers: [AuthService, AccountService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
