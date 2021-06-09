@@ -13,8 +13,8 @@ import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 export class HomeComponent implements OnInit {
 
   userBasicInfo: UserBasicInfo = new UserBasicInfo();
-
   isUserMenuVisible: boolean = false;
+  searchText: string = "";
 
   constructor(private accountService: AccountService,
               private authService: AuthService,
@@ -34,10 +34,11 @@ export class HomeComponent implements OnInit {
 
   onLogOut() {
     this.authService.logout();
+    this.router.navigateByUrl("/");
   }
 
   onAccountClick() {
-    this.router.navigateByUrl("/account");
+    this.router.navigateByUrl("/account/overview");
     console.log("account");
   }
 
@@ -47,6 +48,15 @@ export class HomeComponent implements OnInit {
 
   onUsernameClick() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
+  }
+
+  onSearch() {
+    console.log("enter");
+    this.router.navigate(["/search/user"], {state: {searchText: this.searchText}})
+  }
+
+  onSearchKey(event: KeyboardEvent) { 
+    this.searchText = (event.target as HTMLInputElement).value;
   }
 
 }

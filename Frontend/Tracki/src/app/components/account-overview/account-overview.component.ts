@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from 'src/app/services/auth-service'
@@ -19,10 +19,7 @@ export class AccountOverviewComponent implements OnInit {
   passwordErr :boolean = false;
 
   constructor(
-    private authService: AuthService,
-    private accountService: AccountService,
-    private router: Router,
-    ) { }
+    private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.accountOverviewForm = new FormGroup({
@@ -35,6 +32,7 @@ export class AccountOverviewComponent implements OnInit {
       res => {
         this.userBasicInfo.userName = res.userName;
         this.userBasicInfo.email = res.email;
+        this.image64 = res.photo;
         this.accountOverviewForm.controls['username'].setValue(res.userName);
         this.accountOverviewForm.controls['email'].setValue(res.email);
       }
@@ -45,12 +43,10 @@ export class AccountOverviewComponent implements OnInit {
   get formEmail() { return this.accountOverviewForm.get('email').value }   
   get formPassword() { return this.accountOverviewForm.get('password').value }
 
-  onChange(): void {
-    /*const formUsername = this.accountOverviewForm.get("username").value;
-    const formEmail = this.accountOverviewForm.get("email").value;
-    const formPassword = this.accountOverviewForm.get("password").value*/
-
-    if((this.userBasicInfo.userName != this.formUsername && this.formPassword == "" || this.userBasicInfo.email != this.formEmail && this.formPassword == ""
+  ngOnChanges(): void {
+    if((this.userBasicInfo.userName != this.formUsername && this.formPassword == ""
+      || this.userBasicInfo.email != this.formEmail && this.formPassword == ""
+      || this.imageSrc != null
       || (this.formPassword != "" && this.formPassword.length >= 6)) 
       && (this.formUsername != "" && this.formEmail != "")
     ) {
@@ -63,24 +59,29 @@ export class AccountOverviewComponent implements OnInit {
     this.accountOverviewForm.controls['username'].setValue(this.userBasicInfo.userName);
     this.accountOverviewForm.controls['email'].setValue(this.userBasicInfo.email);
     this.accountOverviewForm.controls['password'].setValue("");
+    this.image64 = "";
+    this.imageSrc = "";
+    this.inputChanged = false;
   }
 
   imageSrc: string;
+  image64: string;
   onFileSelected(event: any): void {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.readAsDataURL(event.target.files[0]); 
 
-      reader.onload = (event) => { // called once readAsDataURL is completed
+      reader.onload = (event) => { 
+        this.inputChanged = true;
         this.imageSrc = <string>event.target.result;
+        this.image64 = this.imageSrc;
+        this.imageSrc = this.imageSrc.substring(this.imageSrc.indexOf(",") + 1);
       }
     }
   }
 
   onSaveChanges(): void {
-    const formPassword = this.accountOverviewForm.get("password").value
-
     if(this.inputChanged) {
       let userInfo: UserLoginInfo;
       userInfo = {userName: this.formUsername, email: this.formEmail, 
@@ -91,6 +92,4 @@ export class AccountOverviewComponent implements OnInit {
       });
     }
   }
-
-
 }

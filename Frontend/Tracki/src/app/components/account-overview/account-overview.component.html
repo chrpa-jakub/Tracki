@@ -4,23 +4,23 @@
         <table class="account-info">
             <tr>
                 <td>Username</td>
-                <td><input type=text formControlName="username" class="input" (ngModelChange)="onChange()"></td>
+                <td><input type=text formControlName="username" class="input" (ngModelChange)="ngOnChanges()"></td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="text" formControlName="email" class="input" (ngModelChange)="onChange()"></td>
+                <td><input type="text" formControlName="email" class="input" (ngModelChange)="ngOnChanges()"></td>
             </tr>
             <tr>
                 <td>Password</td>
                 <td>
-                    <input type="text" placeholder="Type new password here" formControlName="password" class="input" (ngModelChange)="onChange()">
+                    <input type="text" placeholder="Type new password here" formControlName="password" class="input" (ngModelChange)="ngOnChanges()">
                 </td>
             </tr>
             <tr>
                 <td>Profile photo</td>
                 <td>
-                    <img [src]="imageSrc" height="200" class="profile-photo"> <br/>
-                    <input type="file" (change)="onFileSelected($event)">
+                    <img [src]="image64" height="200" class="profile-photo"> <br/>
+                    <input type="file" (change)="onFileSelected($event); ngOnChanges();">
                 </td>
             </tr>
         </table>

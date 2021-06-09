@@ -51,6 +51,7 @@ namespace API.Controllers
 				{
 					UserName = user.UserName,
 					Email = user.Email,
+					Photo = user.Photo
 				};
 			}
 
@@ -72,7 +73,14 @@ namespace API.Controllers
 				if(!string.IsNullOrWhiteSpace(userInfo.Photo))
 				{
 					var userPhoto = Convert.FromBase64String(userInfo.Photo);
-					user.Photo = await storageService.SaveFile(userPhoto, ".jpg", "users");
+					if(String.IsNullOrEmpty(user.Photo))
+                    {
+						user.Photo = await storageService.SaveFile(userPhoto, ".jpg", "users");
+					}
+					else
+                    {
+						user.Photo = await storageService.EditFile(userPhoto, ".jpg", "users", user.Photo);
+					}
 				}
 
 				if(userInfo.Password != "" && userInfo.Password.Length >= 6)

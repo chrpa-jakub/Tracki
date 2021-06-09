@@ -5,7 +5,7 @@
             <div class="links-container">
                 <a routerLink="/" style="color: black">Home</a>
                 <a routerLink="" style="color: black">Your Library</a>
-                <input type="text" placeholder="Search.." class="search-bar">
+                <input type="text" placeholder="Search.." class="search-bar" (keyup.enter)="onSearch()" (keyup)="onSearchKey($event)">
             </div>
         </div>
         <div *ngIf="isLoggedIn; else loggedOut" class="header-btn-container">

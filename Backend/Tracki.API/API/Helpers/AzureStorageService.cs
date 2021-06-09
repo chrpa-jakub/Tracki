@@ -33,7 +33,6 @@ namespace API.Helpers
 
         public async Task<string> EditFile(byte[] content, string extension, string containerName, string fileRoute)
         {
-            if (extension[0] != '.') {extension = "." + extension;}
             await DeleteFile(fileRoute, containerName);
 
             return await SaveFile(content, extension, containerName);
@@ -41,7 +40,6 @@ namespace API.Helpers
 
         public async Task<string> SaveFile(byte[] content, string extension, string containerName)
         {
-            if (extension[0] != '.') {extension = "." + extension;}
             var client = new BlobContainerClient(connectionString, containerName);
             await client.CreateIfNotExistsAsync();
             await client.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
@@ -51,7 +49,7 @@ namespace API.Helpers
             {
                 await blob.UploadAsync(ms);
             }
-            //Console.WriteLine(blob.Uri.ToString());
+
             return blob.Uri.ToString();
 
         }

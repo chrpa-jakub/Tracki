@@ -16,11 +16,13 @@ import { AuthInterceptor } from "src/app/services/auth-interceptor.service";
 import { AuthService } from './services/auth-service';
 import { AccountService } from './services/account.service';
 import { AccountOverviewComponent } from './components/account-overview/account-overview.component';
+import { SearchUserComponent } from './components/search-user/search-user.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'account', component: AccountOverviewComponent }
+  { path: 'account/overview', component: AccountOverviewComponent },
+  { path: 'search/user', component: SearchUserComponent }
 ]
 
 export function tokenGetter() {
@@ -34,6 +36,7 @@ export function tokenGetter() {
     SignupComponent,
     HomeComponent,
     AccountOverviewComponent,
+    SearchUserComponent,
   ],
   imports: [
     BrowserModule,
