@@ -5,7 +5,7 @@
             <div class="links-container">
                 <a routerLink="/" style="color: black">Home</a>
                 <a routerLink="" style="color: black">Your Library</a>
-                <input type="text" placeholder="Search.." class="search-bar" (keyup.enter)="onSearch()" (keyup)="onSearchKey($event)">
+                <input type="text" placeholder="Search.." class="search-bar" (keyup.enter)="onSearch()" (keyup)="onSearchKey($event)" value={{searchText}}>
             </div>
         </div>
         <div *ngIf="isLoggedIn; else loggedOut" class="header-btn-container">
@@ -16,7 +16,7 @@
             <button class="btn premium-button">Premium</button>
             <button class="btn user-button" (click)="onUsernameClick()">{{ userBasicInfo.userName }}</button>      
             <div *ngIf="isUserMenuVisible" class="user-menu">
-                <a routerLink="/account"><button class="btn user-menu-button">Account</button></a> 
+                <a routerLink="/account/overview"><button class="btn user-menu-button">Account</button></a> 
                 <a routerLink="/profile"><button class="btn user-menu-button">Profile</button></a> 
               <button class="btn user-menu-button" (click)="onLogOut()">Log Out</button>
             </div>

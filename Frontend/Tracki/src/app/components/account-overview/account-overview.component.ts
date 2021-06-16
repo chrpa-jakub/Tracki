@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from 'src/app/services/auth-service'
+import { AuthService } from 'src/app/services/auth.service'
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { UserLoginInfo } from 'src/app/models/UserLoginInfo';
@@ -18,8 +18,7 @@ export class AccountOverviewComponent implements OnInit {
   inputChanged: boolean = false;
   passwordErr :boolean = false;
 
-  constructor(
-    private accountService: AccountService) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.accountOverviewForm = new FormGroup({

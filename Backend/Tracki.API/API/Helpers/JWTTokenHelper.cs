@@ -21,7 +21,7 @@ namespace API.Helpers
 			this.configuration = configuration;
 		}
 
-		public string GenerateToken(IdentityUser user)
+		public string GenerateToken(ApplicationUser user)
 		{
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{

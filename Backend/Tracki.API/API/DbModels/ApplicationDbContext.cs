@@ -19,8 +19,7 @@ namespace API.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
-
-			modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+			
 			modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
 			modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 			modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
@@ -28,12 +27,10 @@ namespace API.Models
 			modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 			modelBuilder.Entity<IdentityRole>().ToTable("Roles");
 		}
-
+		
 		public DbSet<Artist> Artists { get; set; }
 		public DbSet<Release> Releases { get; set; }
 		public DbSet<ReleaseType> ReleaseTypes { get; set; }
 		public DbSet<Song> Songs { get; set; }
-		//public virtual DbSet<User> Users { get; set; }
-
 	}
 }

@@ -24,27 +24,27 @@ namespace API.Controllers
 	[EnableCors("AllAllowed")]
 	public class AuthController : ControllerBase
 	{
-		private readonly ApplicationDbContext context;
-		private readonly UserManager<ApplicationUser> userManager;
-		private readonly SignInManager<ApplicationUser> signInManager;
-		private readonly IConfiguration configuration;
-		private readonly JWTTokenHelper jwtHelper;
+		private readonly ApplicationDbContext _context;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly IConfiguration _configuration;
+		private readonly JWTTokenHelper _jwtHelper;
 
 		public AuthController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, 
 			IConfiguration configuration, JWTTokenHelper jwtHelper)
 		{
-			this.context = context;
-			this.userManager = userManager;
-			this.signInManager = signInManager;
-			this.configuration = configuration;
-			this.jwtHelper = jwtHelper;
+			_context = context;
+			_userManager = userManager;
+			_signInManager = signInManager;
+			_configuration = configuration;
+			_jwtHelper = jwtHelper;
 		}
 
 		[HttpPost("signup")]
 		public async Task<ActionResult<UserJwtToken>> CreateUser([FromBody] UserSignupInfo userInfo)
-		{
-			var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email };
-			var result = await userManager.CreateAsync(user, userInfo.Password);
+		{ 
+			var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email, Photo="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=612x612&w=0&h=NGxdexflb9EyQchqjQP0m6wYucJBYLfu46KCLNMHZYM="};
+			var result = await _userManager.CreateAsync(user, userInfo.Password);
 			
 			if (result.Succeeded) 
 			{
@@ -57,15 +57,16 @@ namespace API.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<UserJwtToken>> Login([FromBody] UserSignupInfo userInfo)
 		{
-			var user = await userManager.FindByNameAsync(userInfo.UserName);
+			var user = await _userManager.FindByNameAsync(userInfo.UserName);
 
-			if (user != null && await userManager.CheckPasswordAsync(user, userInfo.Password))
+			if (user != null && await _userManager.CheckPasswordAsync(user, userInfo.Password))
 			{
-				var token = jwtHelper.GenerateToken(user);
+				var token = _jwtHelper.GenerateToken(user);
 				return Ok(new { token });;
 			}
 			else
 				return BadRequest(new { message = "Username or password is incorrect." });
 		}
+		
 	}
 }

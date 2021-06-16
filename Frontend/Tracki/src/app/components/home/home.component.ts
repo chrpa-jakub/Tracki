@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth-service'
+import { AuthService } from 'src/app/services/auth.service'
 import { AccountService } from 'src/app/services/account.service'
 import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
 
   onSearch() {
     console.log("enter");
-    this.router.navigate(["/search/user"], {state: {searchText: this.searchText}})
+    this.router.navigate(["/user/search/" + this.searchText]);
   }
 
   onSearchKey(event: KeyboardEvent) { 

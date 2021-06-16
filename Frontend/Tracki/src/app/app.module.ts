@@ -13,16 +13,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthInterceptor } from "src/app/services/auth-interceptor.service";
-import { AuthService } from './services/auth-service';
+import { AuthService } from './services/auth.service';
 import { AccountService } from './services/account.service';
 import { AccountOverviewComponent } from './components/account-overview/account-overview.component';
-import { SearchUserComponent } from './components/search-user/search-user.component';
+import { SearchUsersComponent } from './components/search-users/search-users.component';
+import { MusicPlayerComponent } from './components/music-player/music-player.component';
+import { IndividualSearchUserComponent } from './components/individual-search-user/individual-search-user.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'account/overview', component: AccountOverviewComponent },
-  { path: 'search/user', component: SearchUserComponent }
+  { path: 'user/search/:searchText', component: SearchUsersComponent },
 ]
 
 export function tokenGetter() {
@@ -36,7 +38,10 @@ export function tokenGetter() {
     SignupComponent,
     HomeComponent,
     AccountOverviewComponent,
-    SearchUserComponent,
+    SearchUsersComponent,
+    MusicPlayerComponent,
+    SearchUsersComponent,
+    IndividualSearchUserComponent,
   ],
   imports: [
     BrowserModule,

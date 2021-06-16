@@ -25,17 +25,17 @@ namespace API.Controllers
 	[Authorize(AuthenticationSchemes = "Bearer")]
 	public class AccountController : ControllerBase
 	{
-		private readonly ApplicationDbContext context;
-		private readonly UserManager<ApplicationUser> userManager;
-		private readonly JWTTokenHelper jwtHelper;
-		private readonly AzureStorageService storageService;
+		private readonly ApplicationDbContext _context;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly JWTTokenHelper _jwtHelper;
+		private readonly AzureStorageService _storageService;
 
 		public AccountController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, JWTTokenHelper jwtHelper, AzureStorageService storageService)
 		{
-			this.context = context;
-			this.userManager = userManager;
-			this.jwtHelper = jwtHelper;
-			this.storageService = storageService;
+			_context = context;
+			_userManager = userManager;
+			_jwtHelper = jwtHelper;
+			_storageService = storageService;
 		}
 
 		[HttpGet("overview")]
@@ -43,7 +43,7 @@ namespace API.Controllers
 		{
 			var claimsIdentity = User.Identity as ClaimsIdentity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
-			var user = await userManager.FindByIdAsync(userId);
+			var user = await _userManager.FindByIdAsync(userId);
 
 			if (user != null)
 			{
@@ -63,7 +63,7 @@ namespace API.Controllers
 		{
 			var claimsIdentity = User.Identity as ClaimsIdentity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
-			var user = await userManager.FindByIdAsync(userId);
+			var user = await _userManager.FindByIdAsync(userId);
 
 			if (user != null)
 			{
@@ -75,20 +75,20 @@ namespace API.Controllers
 					var userPhoto = Convert.FromBase64String(userInfo.Photo);
 					if(String.IsNullOrEmpty(user.Photo))
                     {
-						user.Photo = await storageService.SaveFile(userPhoto, ".jpg", "users");
+						user.Photo = await _storageService.SaveFile(userPhoto, ".jpg", "users");
 					}
 					else
                     {
-						user.Photo = await storageService.EditFile(userPhoto, ".jpg", "users", user.Photo);
+						user.Photo = await _storageService.EditFile(userPhoto, ".jpg", "users", user.Photo);
 					}
 				}
 
 				if(userInfo.Password != "" && userInfo.Password.Length >= 6)
 				{
-					var token = await userManager.GeneratePasswordResetTokenAsync(user);
-					await userManager.ResetPasswordAsync(user, token, userInfo.Password);
+					var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+					await _userManager.ResetPasswordAsync(user, token, userInfo.Password);
 				}
-				await userManager.UpdateAsync(user);
+				await _userManager.UpdateAsync(user);
 
 				return Ok();
 			}

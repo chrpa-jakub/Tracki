@@ -1,0 +1,6 @@
+<div *ngIf="usersToDisplay.length == 0">
+    There are no users with username or email "{{searchText}}"
+</div>
+<div *ngFor="let user of usersToDisplay; let i = index">
+    <app-individual-search-user [user]="user"></app-individual-search-user>
+</div>

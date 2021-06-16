@@ -1,0 +1,59 @@
+@mixin roundButton {
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+.container {
+    cursor: pointer;
+    display: flex;
+    background-color: white;
+    border-radius: 5px;
+    margin: 0px 10px 10px 10px;
+}
+
+.container:hover {
+    border: 1px solid black;
+    border-radius: 0px;
+}
+
+.photo {
+    width: 60px;
+    height: 60px;
+}
+
+.user-info {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.add-friend-btn {
+    position: absolute;
+    left: 250px;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 1rem;
+    background-color: #30B052;
+    border: 2px solid #30B052;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.add-friend-btn:hover {
+    color: #30B052;
+    background-color: white;
+}
