@@ -43,7 +43,10 @@ namespace API.Controllers
 		[HttpPost("signup")]
 		public async Task<ActionResult<UserJwtToken>> CreateUser([FromBody] UserSignupInfo userInfo)
 		{ 
-			var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email, Photo="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=612x612&w=0&h=NGxdexflb9EyQchqjQP0m6wYucJBYLfu46KCLNMHZYM="};
+			var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email, 
+				Photo="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=612x612&w=0&h=NGxdexflb9EyQchqjQP0m6wYucJBYLfu46KCLNMHZYM="
+			};
+			
 			var result = await _userManager.CreateAsync(user, userInfo.Password);
 			
 			if (result.Succeeded) 

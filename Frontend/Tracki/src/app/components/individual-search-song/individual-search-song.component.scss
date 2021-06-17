@@ -1,52 +1,53 @@
 @mixin roundButton {
-    margin-top: 10px;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     display: inline-block;
-    padding: 7px 12px;
-    border-radius: 20px;
+    padding: 4px 40px;
+    border-radius: 18px;
     font-size: 1rem;
     background-color: #30B052;
     border: 2px solid #30B052;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
 }
 
 .container {
     display: flex;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 15px;
     margin: 10px 10px 10px 10px;
 }
 
 .photo {
-    width: 60px;
-    height: 60px;
+    width: 180px;
+    height: 120px;
+    border-radius: 15px;
 }
+ .song-info {
+     margin-left: 15px;
+ }
 
-.user-info {
+ .song-name {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
     margin-top: 10px;
-    margin-left: 10px;
-}
+ }
 
-.userName {
-    font-weight: bold;
-}
+ .artist-name {
+     font-size: 1.2rem;
+ }
 
-.add-friend-btn {
+.play-btn {
     @include roundButton();
-    position: absolute;
-    left: 390px;
 }
 
-.add-friend-btn:hover, .view-profile-btn:hover {
+.play-btn:hover{
     color: #30B052;
     background-color: white;
 }
 
-.view-profile-btn {
-    @include roundButton();
-    position: absolute;
-    left: 250px;
+.rating {
+    font-size: 1rem;
 }

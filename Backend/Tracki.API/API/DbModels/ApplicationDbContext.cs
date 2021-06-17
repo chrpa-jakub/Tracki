@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace API.Models
 {
-	public partial class ApplicationDbContext : IdentityDbContext
+	public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -19,7 +19,8 @@ namespace API.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
-			
+
+			modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 			modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
 			modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 			modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
@@ -29,8 +30,6 @@ namespace API.Models
 		}
 		
 		public DbSet<Artist> Artists { get; set; }
-		public DbSet<Release> Releases { get; set; }
-		public DbSet<ReleaseType> ReleaseTypes { get; set; }
 		public DbSet<Song> Songs { get; set; }
 	}
 }

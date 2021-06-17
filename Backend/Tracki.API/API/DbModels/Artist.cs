@@ -7,9 +7,8 @@ namespace API.Models
     public partial class Artist
     {
         [Key]
-        public int ArtistId { get; set; }
-        public string ArtistName { get; set; }
-        public string ArtistLocation { get; set; }
-        public ApplicationUser User { get; set; }
+        public int ArtistID { get; set; }
+        public string Name { get; set; }
+        public string Photo { get; set; }
     }
 }

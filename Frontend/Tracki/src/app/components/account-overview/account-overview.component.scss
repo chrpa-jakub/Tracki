@@ -13,8 +13,9 @@ $background-color: #F2F2F2;
     font-size: 1rem;
 }
 
-.account-overview-container {
-
+.container {
+    width: 100%; 
+    margin-top: 20px;
 }
 
 .info-text {
@@ -74,4 +75,3 @@ $background-color: #F2F2F2;
     width: 100px;
     height: 100px;
 }
-

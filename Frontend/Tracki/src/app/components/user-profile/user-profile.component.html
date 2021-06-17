@@ -1,0 +1,11 @@
+<div class="container">
+    <img class="photo" src={{userInfo.photo}}/>
+    <div class="userInfo">
+        <div class="userName">{{userInfo.userName}}</div>
+        <div class="email">{{userInfo.email}}</div>
+        <div class="followers-following">
+            <p>Followers:</p> <div *ngIf="userInfo.followers == null">0</div>{{userInfo.followers}}
+            <p style="margin-left: 30px;">Following:</p>  <div *ngIf="userInfo.following == null">0</div>{{userInfo.followers}}
+        </div>
+    </div>
+</div>

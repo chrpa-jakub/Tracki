@@ -1,0 +1,12 @@
+<div *ngFor="let song of songsToDisplay; let i = index">
+    <app-individual-search-song [song]="song"></app-individual-search-song>
+</div>
+<div *ngFor="let user of usersToDisplay; let i = index">
+    <app-individual-search-user [user]="user"></app-individual-search-user>
+</div>
+<div *ngIf="usersToDisplay.length == 0">
+    There are no users with username or email "{{searchText}}"
+</div>
+<div *ngIf="songsToDisplay.length == 0">
+    There are no songs with name "{{searchText}}"
+</div>

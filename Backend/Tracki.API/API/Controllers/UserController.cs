@@ -21,7 +21,7 @@ namespace API.Controllers
 	[Route("api/[controller]")]
 	[ApiController]
 	[EnableCors("AllAllowed")]
-	//[Authorize(AuthenticationSchemes = "Bearer")]
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	public class UserController : ControllerBase
 	{
 		private readonly ApplicationDbContext _context;
@@ -44,9 +44,9 @@ namespace API.Controllers
 				{
 					Email = user.Email,
 					Photo = user.Photo,
-					UserName = user.UserName,
-					Followers = user.Followers,
-					Following = user.Following
+					UserName = user.UserName
+					//Followers = user.Followers,
+					//Following = user.Following
 				};
 			}
 
@@ -97,5 +97,38 @@ namespace API.Controllers
 
 			return userInfo;
 		}
+
+		// Nefunguje!
+		/*[HttpGet("{username}/follow")]
+		public async Task<ActionResult> FollowUser(string username)
+		{
+			var claimsIdentity = User.Identity as ClaimsIdentity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+			var currentUser = await _userManager.FindByIdAsync(userId);
+
+			if (currentUser != null)
+			{
+				var userToFollow = await _userManager.FindByNameAsync(username);
+				
+				if (userToFollow != null)
+				{
+					if (userToFollow.Followers == null)
+						userToFollow.Followers = new List<ApplicationUser>();
+					
+					if (currentUser.Following == null)
+						currentUser.Following = new List<ApplicationUser>();
+					
+					userToFollow.Followers.Add(currentUser);
+					currentUser.Following.Add(userToFollow);
+					await _userManager.UpdateAsync(currentUser);
+					await _userManager.UpdateAsync(userToFollow);
+					return Ok();
+				}
+
+				return BadRequest($"User {username} does not exist.");
+			}
+
+			return BadRequest("Invalid jwt token.");
+		}*/
 	}
 }

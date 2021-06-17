@@ -1,0 +1,14 @@
+<div class="container">
+    <img src={{song.photo}} alt="ProfilePhoto" class="photo">
+    <div class="song-info">
+        <div class="song-name">{{song.name}}</div>
+        <div class="artist-name">Adamex</div>
+        <div class="rating">
+            Rating: <star-rating [starType]="'svg'" [rating]="2.63"></star-rating>
+        </div>
+        <button class="btn play-btn" (click)="onPlayClick()">Play</button>
+    </div>
+</div>
+<div *ngIf="isPlaying">
+    <app-music-player [songLocation]=song.location></app-music-player>
+</div>

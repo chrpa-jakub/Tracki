@@ -51,11 +51,14 @@ $background-color: #F2F2F2;
 }
 
 .search-bar {
-    border-radius: 25px;    @include roundButton();
+    @include roundButton();
+    border-radius: 25px;    
     padding: 10px;
     border: none;
     margin-top: 7px;
     font-size: 1.2rem;
+    text-align: left;
+    font-weight: normal;
     background-color: $background-color;
 }
 

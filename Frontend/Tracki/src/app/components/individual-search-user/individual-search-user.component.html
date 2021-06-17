@@ -1,10 +1,11 @@
 <div class="container">
     <img src={{user.photo}} alt="ProfilePhoto" class="photo">
     <div class="user-info">
-        <div class="username">{{user.userName}}</div>
+        <div class="userName">{{user.userName}}</div>
         <div class="email">{{user.email}}</div>
     </div>
     <div class="buttons">
-        <button class="btn add-friend-btn">Follow</button>
+        <button class="btn add-friend-btn" (click)="onFollowClick()">Follow</button>
+        <button class="btn view-profile-btn" (click)="onUserClick()">View Profile</button>
     </div>
 </div>

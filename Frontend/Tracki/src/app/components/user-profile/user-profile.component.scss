@@ -1,0 +1,37 @@
+.container {
+    width: 100%; 
+    display: flex; 
+    justify-content:center; 
+    margin-top: 20px;
+}
+
+.photo {
+    width: 122px;;
+    height: 122px;
+    border-radius: 20px;
+}
+
+.userInfo  {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.userName {
+    font-size: 2rem;
+}
+
+.email {
+    font-size: 1.6rem;
+    margin-top: 25px;
+}
+
+.followers-following {
+    display: flex;
+    margin-top: 20px;
+    font-size: 1.3rem;
+}
+
+.followers-following > p {
+    cursor: pointer;
+    margin-right: 15px;
+}

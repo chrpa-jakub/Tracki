@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.signupForm = new FormGroup({
       email: new FormControl('', Validators.required),
-      username: new FormControl('', Validators.required),
+      userName: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
   }
@@ -30,14 +30,14 @@ export class SignupComponent implements OnInit {
   signupErr: boolean = false;
   
   get email() { return this.signupForm.get('email') }  
-  get username() { return this.signupForm.get('username') }  
+  get userName() { return this.signupForm.get('userName') }  
   get password() { return this.signupForm.get('password') }
   get signupError() { return this.signupErr }
   
   onSubmit(): void {
     this.submitted = true;
     const email = this.signupForm.get('email');
-    const userName = this.signupForm.get('username');
+    const userName = this.signupForm.get('userName');
     const password = this.signupForm.get('password');
 
     let signupInfo: UserLoginInfo;

@@ -36,23 +36,13 @@ export class HomeComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl("/");
   }
-
-  onAccountClick() {
-    this.router.navigateByUrl("/account/overview");
-    console.log("account");
-  }
-
-  onProfileClick() {
-    this.router.navigateByUrl("/profile");
-  }
-
+  
   onUsernameClick() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
   }
 
   onSearch() {
-    console.log("enter");
-    this.router.navigate(["/user/search/" + this.searchText]);
+    this.router.navigate(["search/" + this.searchText]);
   }
 
   onSearchKey(event: KeyboardEvent) { 

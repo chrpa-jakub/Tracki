@@ -1,10 +1,10 @@
-<div class="account-overview-container">
-    <div class="info-text">Information about your account</div>
+<div class="container">
+    <p class="info-text">Account overview</p>
     <form [formGroup]="accountOverviewForm" (ngSubmit)="onSaveChanges()" class="formitko">
         <table class="account-info">
             <tr>
                 <td>Username</td>
-                <td><input type=text formControlName="username" class="input" (ngModelChange)="ngOnChanges()"></td>
+                <td><input type=text formControlName="userName" class="input" (ngModelChange)="ngOnChanges()"></td>
             </tr>
             <tr>
                 <td>Email</td>

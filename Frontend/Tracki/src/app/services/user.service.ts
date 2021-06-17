@@ -16,11 +16,15 @@ export class UserService {
     return this.http.get<UserBasicInfo[]>(`${this.baseUrl}/all`);
   }
 
-  getUserByUsername(username: string): Observable<UserDetailedInfo> {
-    return this.http.get<UserDetailedInfo>(`${this.baseUrl}/${username}`);
+  getUserByUsername(userName: string): Observable<UserDetailedInfo> {
+    return this.http.get<UserDetailedInfo>(`${this.baseUrl}/${userName}`);
   }
 
   getUsersBySearch(searchText: string): Observable<UserBasicInfo[]> {
     return this.http.get<UserBasicInfo[]>(`${this.baseUrl}/search/${searchText}`);
+  }
+
+  followUser(userName: string) {
+    return this.http.get(`${this.baseUrl}/${userName}/follow`);
   }
 }

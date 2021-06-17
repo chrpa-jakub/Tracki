@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-music-player',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./music-player.component.scss']
 })
 export class MusicPlayerComponent implements OnInit {
+
+  @Input() songLocation: string = "";
 
   constructor() { }
 

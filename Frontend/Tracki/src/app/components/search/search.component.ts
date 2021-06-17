@@ -1,25 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from "src/app/services/user.service"
+import { SongService } from "src/app/services/song.service"
 import { UserBasicInfo } from 'src/app/models/UserBasicInfo';
 import { ActivatedRoute } from "@angular/router";
+import { SongInfo } from 'src/app/models/SongInfo';
 
 @Component({
-  selector: 'app-search-users',
-  templateUrl: './search-users.component.html',
-  styleUrls: ['./search-users.component.scss']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss']
 })
-export class SearchUsersComponent implements OnInit {
+export class SearchComponent implements OnInit {
 
-  @Input() searchText: string;
-
+  searchText: string;
+  songsToDisplay: SongInfo[] = [];
   usersToDisplay: UserBasicInfo[] = [];
+  
   constructor(private userService: UserService,
+              private songService: SongService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.searchText = params.get("searchText");
-      this.searchUser();
+      this.searchUsers();
+      this.searchSongs();
     })
   }
 
@@ -30,11 +35,19 @@ export class SearchUsersComponent implements OnInit {
     });
   }
 
-  searchUser(): void {
+  searchUsers(): void {
     this.usersToDisplay = [];
     this.userService.getUsersBySearch(this.searchText).subscribe(res => {
       this.usersToDisplay.push(...res);
     })
   }
+
+  searchSongs(): void {
+    this.songsToDisplay = [];
+    this.songService.getSongsBySearch(this.searchText).subscribe(res => {
+      this.songsToDisplay.push(...res);
+    })
+  }
+  
 
 }

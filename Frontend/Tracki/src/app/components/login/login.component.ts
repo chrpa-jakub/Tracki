@@ -43,16 +43,16 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
 
-    const emailOrUsername = this.emailOrUsername;
+    const emailOrUserName = this.emailOrUsername;
     const password = this.password;
     const rememberMe = this.loginForm.get('rememberMe');
 
     // If email, username, passwords arent null, send the login request
-    if(!(emailOrUsername.errors?.required || password.errors?.required))
+    if(!(emailOrUserName.errors?.required || password.errors?.required))
     {
       let login: UserLoginInfo;
     
-      login = {email: emailOrUsername.value, userName: emailOrUsername.value, password: password.value, photo: "" }
+      login = {email: emailOrUserName.value, userName: emailOrUserName.value, password: password.value, photo: "" }
   
       this.authService.login(login).subscribe(res => {
         const token = (<any>res).token;
